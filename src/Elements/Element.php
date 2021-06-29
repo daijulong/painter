@@ -3,8 +3,6 @@
 
 namespace Daijulong\Painter\Elements;
 
-
-use Daijulong\Painter\Canvas\Canvas;
 use Daijulong\Painter\Contacts\ElementContacts;
 use Daijulong\Painter\Traits\Coordinate;
 

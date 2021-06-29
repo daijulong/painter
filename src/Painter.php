@@ -26,17 +26,17 @@ class Painter
      *
      * @return Canvas
      */
-    public function canvas()
+    public function getCanvas()
     {
         return $this->canvas;
     }
 
-    public function startWithBlankCanvas()
+    public function startOnBlankCanvas()
     {
         $this->canvas = new Canvas();
     }
 
-    public function startWithBackgroundImage()
+    public function startOnBackgroundImage()
     {
 
     }
