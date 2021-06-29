@@ -1,0 +1,21 @@
+{
+    "name": "daijulong/painter",
+    "description": "A tool for synthesizing images",
+    "type": "library",
+    "license": "MIT License",
+    "authors": [
+        {
+            "name": "daijulong",
+            "email": "daijulong@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Daijulong\\Painter\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "ext-imagick": "*"
+    }
+}

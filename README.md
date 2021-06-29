@@ -1,2 +1,2 @@
 # painter
-A tool for synthesizing pictures
+A tool for synthesizing images
