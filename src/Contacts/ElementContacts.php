@@ -13,4 +13,6 @@ interface ElementContacts
     public function getX(): int;
 
     public function getY(): int;
+
+    public function getBottomY(): int;
 }

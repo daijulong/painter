@@ -3,6 +3,7 @@
 
 namespace Daijulong\Painter\Elements;
 
+use Daijulong\Painter\Canvas\Canvas;
 use Daijulong\Painter\Contacts\ElementContacts;
 use Daijulong\Painter\Traits\Coordinate;
 
@@ -23,6 +24,13 @@ abstract class Element implements ElementContacts
      * @var int
      */
     protected $height;
+
+    /**
+     * 画布
+     *
+     * @var Canvas
+     */
+    protected $canvas;
 
     /**
      * 获取宽度
@@ -47,12 +55,12 @@ abstract class Element implements ElementContacts
     /**
      * 设置宽度
      *
-     * @param int $with
+     * @param int $width
      * @return self
      */
-    public function setWith(int $with): self
+    public function setWidth(int $width): self
     {
-        $this->with = max($with, 0);
+        $this->width = max($width, 0);
         return $this;
     }
 
@@ -90,6 +98,26 @@ abstract class Element implements ElementContacts
     {
         $this->height = max($this->height + $i, 0);
         return $this;
+    }
+
+    /**
+     * 注入画布
+     *
+     * @param Canvas $canvas
+     * @return self
+     */
+    public function setCanvas(Canvas &$canvas): self
+    {
+        $this->canvas = $canvas;
+        return $this;
+    }
+
+    /**
+     * @return \Imagick
+     */
+    public function getCanvas(): \Imagick
+    {
+        return $this->canvas;
     }
 
 }

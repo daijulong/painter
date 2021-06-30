@@ -28,9 +28,9 @@ trait Coordinate
      * 设置 X 坐标
      *
      * @param int $x
-     * @return Coordinate
+     * @return self
      */
-    public function setX(int $x): Coordinate
+    public function setX(int $x): self
     {
         $this->x = $x;
         return $this;
@@ -40,9 +40,9 @@ trait Coordinate
      * 设置 Y 坐标
      *
      * @param int $y
-     * @return Coordinate
+     * @return self
      */
-    public function setY(int $y): Coordinate
+    public function setY(int $y): self
     {
         $this->y = $y;
         return $this;
@@ -52,9 +52,9 @@ trait Coordinate
      * 将 X 坐标右移
      *
      * @param int $i
-     * @return Coordinate
+     * @return self
      */
-    public function addX(int $i): Coordinate
+    public function addX(int $i): self
     {
         return $this->setX(max($this->x + $i, 0));
     }
@@ -63,9 +63,9 @@ trait Coordinate
      * 将 Y 坐标下移
      *
      * @param int $i
-     * @return Coordinate
+     * @return self
      */
-    public function addY(int $i): Coordinate
+    public function addY(int $i): self
     {
         return $this->setY(max($this->y + $i, 0));
     }
@@ -76,9 +76,9 @@ trait Coordinate
      * 最多移动到 0
      *
      * @param int $i
-     * @return Coordinate
+     * @return self
      */
-    public function subX(int $i): Coordinate
+    public function subX(int $i): self
     {
         return $this->setX(max($this->x - $i, 0));
     }
@@ -89,9 +89,9 @@ trait Coordinate
      * 最多移动到 0
      *
      * @param int $i
-     * @return Coordinate
+     * @return self
      */
-    public function subY(int $i): Coordinate
+    public function subY(int $i): self
     {
         return $this->setY(max($this->y - $i, 0));
     }
@@ -101,9 +101,9 @@ trait Coordinate
      *
      * @param int $x
      * @param int $y
-     * @return Coordinate
+     * @return self
      */
-    public function setCoordinate(int $x, int $y): Coordinate
+    public function setCoordinate(int $x, int $y): self
     {
         return $this->setX($x)->setY($y);
     }
