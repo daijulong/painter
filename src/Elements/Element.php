@@ -113,6 +113,8 @@ abstract class Element implements ElementContacts
     }
 
     /**
+     * 获取画布对象
+     *
      * @return \Imagick
      */
     public function getCanvas(): \Imagick

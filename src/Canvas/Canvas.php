@@ -59,6 +59,20 @@ class Canvas
     protected $image;
 
     /**
+     * 内左边距
+     *
+     * @var int
+     */
+    protected $paddingLeft = 0;
+
+    /**
+     * 内右边距
+     *
+     * @var int
+     */
+    protected $paddingRight = 0;
+
+    /**
      * Canvas constructor.
      */
     public function __construct()
@@ -105,7 +119,7 @@ class Canvas
      * @param int $width
      * @return Canvas
      */
-    public function setWidth(int $width): Canvas
+    public function width(int $width): Canvas
     {
         $this->width = max($width, 0);
         return $this;
@@ -146,6 +160,18 @@ class Canvas
     }
 
     /**
+     * 获取画布内宽
+     *
+     * 画布宽度 - paddingLeft - paddingRight
+     *
+     * @return int
+     */
+    public function getInnerWidth(): int
+    {
+        return $this->width - $this->paddingLeft - $this->paddingRight;
+    }
+
+    /**
      * 获取背景色
      *
      * @return string
@@ -159,10 +185,12 @@ class Canvas
      * 设置背景色
      *
      * @param string $backgroundColor
+     * @return Canvas
      */
-    public function setBackgroundColor(string $backgroundColor)
+    public function setBackgroundColor(string $backgroundColor): Canvas
     {
         $this->backgroundColor = $backgroundColor;
+        return $this;
     }
 
     /**
@@ -179,10 +207,12 @@ class Canvas
      * 设置背景图
      *
      * @param string $backgroundImage
+     * @return Canvas
      */
-    public function setBackgroundImage(string $backgroundImage)
+    public function setBackgroundImage(string $backgroundImage): Canvas
     {
         $this->backgroundImage = $backgroundImage;
+        return $this;
     }
 
     /**
@@ -208,6 +238,17 @@ class Canvas
     public function draw()
     {
         $this->image->newImage($this->width, $this->height, $this->backgroundColor);
+        //背景图
+        if ($this->backgroundImage) {
+            $this->getHeight();
+            $backgroundImage = new \Imagick($this->backgroundImage);
+            $backgroundImageHeight = $backgroundImage->getImageHeight();
+            $y = 0;
+            while ($y < $this->getHeight()) {
+                $this->image->compositeImage($backgroundImage, \Imagick::COMPOSITE_OVER, 0, $y, \Imagick::CHANNEL_ALL);
+                $y += $backgroundImageHeight;
+            }
+        }
     }
 
     /**
@@ -238,5 +279,61 @@ class Canvas
     public function getImage(): \Imagick
     {
         return $this->image;
+    }
+
+    /**
+     * 获取左内边距
+     *
+     * @return int
+     */
+    public function getPaddingLeft(): int
+    {
+        return $this->paddingLeft;
+    }
+
+    /**
+     * 设置左内边距
+     *
+     * @param int $paddingLeft
+     * @return Canvas
+     */
+    public function setPaddingLeft(int $paddingLeft): Canvas
+    {
+        $this->paddingLeft = $paddingLeft;
+        return $this;
+    }
+
+    /**
+     * 获取左内边距
+     *
+     * @return int
+     */
+    public function getPaddingRight(): int
+    {
+        return $this->paddingRight;
+    }
+
+    /**
+     * 设置右内边距
+     *
+     * @param int $paddingRight
+     * @return Canvas
+     */
+    public function setPaddingRight(int $paddingRight): Canvas
+    {
+        $this->paddingRight = $paddingRight;
+        return $this;
+    }
+
+    /**
+     * 设置宽度内边距
+     *
+     * @param int $left
+     * @param int $right
+     * @return Canvas
+     */
+    public function setPaddingWidth(int $left, int $right): Canvas
+    {
+        return $this->setPaddingLeft($left)->setPaddingRight($right);
     }
 }

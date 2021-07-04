@@ -4,9 +4,9 @@ namespace Daijulong\Painter;
 
 use Daijulong\Painter\Canvas\Canvas;
 use Daijulong\Painter\Contacts\ElementContacts;
-use Daijulong\Painter\Drivers\Imagick;
 use Daijulong\Painter\Elements\Image\Image;
 use Daijulong\Painter\Elements\Text\Text;
+use Daijulong\Painter\Elements\TextBlock\TextBlock;
 
 class Painter
 {
@@ -24,6 +24,9 @@ class Painter
      */
     protected $elements = [];
 
+    /**
+     * Painter constructor.
+     */
     public function __construct()
     {
         $this->canvas = new Canvas();
@@ -41,8 +44,10 @@ class Painter
 
     /**
      * 渲染图像
+     *
+     * @return Canvas
      */
-    public function paint($filename)
+    public function paint(): Canvas
     {
         //如果为自动高度的，需要先计算一下合成后的最大高度
         if ($this->canvas->isAutoHeight()) {
@@ -56,20 +61,23 @@ class Painter
         //合成
         foreach ($this->elements as $element) {
             $element->paste();
+            $element->destroy();
         }
 
-        return $this->canvas->writeImage($filename);
+        return $this->canvas;
     }
 
     /**
      * 渲染
      *
-     * @param string $output
+     * @param $filename
      * @return bool
+     * @throws \ImagickException
      */
     public function output($filename)
     {
-        return $this->paint($filename);
+        $this->paint();
+        return $this->canvas->writeImage($filename);
     }
 
     /**
@@ -78,6 +86,7 @@ class Painter
      * @param null $file
      * @param string $index
      * @return Image
+     * @throws \ImagickException
      */
     public function image($file = null, string $index = ''): Image
     {
@@ -95,6 +104,22 @@ class Painter
     public function text(string $text, string $index = ''): Text
     {
         $this->addElement((new Text($text))->setCanvas($this->canvas), $index);
+        return $this->getLatestElement();
+    }
+
+    /**
+     * 创建一个文本块元素
+     *
+     * @param string $text
+     * @param string $index
+     * @param int $width 文本块宽度
+     * @return TextBlock
+     * @throws \ImagickDrawException
+     * @throws \ImagickException
+     */
+    public function textBlock(string $text, string $index = '', int $width = 0): TextBlock
+    {
+        $this->addElement((new TextBlock($text, $width))->setCanvas($this->canvas), $index);
         return $this->getLatestElement();
     }
 
